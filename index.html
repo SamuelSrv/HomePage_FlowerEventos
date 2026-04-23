@@ -4,30 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flower Eventos - Guaíba</title>
+    
     <link rel="icon" href="img/favicon.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* === VARIÁVEIS DE CORES BASEADAS NO LOGO === */
+        /* === VARIÁVEIS DE CORES === */
         :root {
-            --bg-color: #1e140d; 
-            --surface-color: #2a1e16; 
+            --bg-color: #1a110a; 
+            --surface-color: #261a10; 
             --text-primary: #f9f4ea; 
-            --text-secondary: #b8a48c; 
+            --text-secondary: #c5b3a0; 
             --accent-color: #d9a657; 
             --accent-glow: rgba(217, 166, 87, 0.3);
+            --whatsapp-green: #25D366;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif; 
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
+            font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animação de Revelação */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* === HEADER FIXO === */
@@ -58,11 +82,11 @@
         }
 
         header h1 {
+            font-family: var(--font-heading);
             font-size: 1.3rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-primary);
-            font-weight: 600;
         }
 
         .social-header {
@@ -77,7 +101,7 @@
             border: 2px solid var(--accent-color);
             padding: 6px 12px;
             border-radius: 5px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             font-weight: 600;
         }
 
@@ -88,83 +112,78 @@
 
         /* === HERO SECTION === */
         .hero {
-            padding: 60px 20px;
+            position: relative;
+            padding: 100px 20px;
             text-align: center;
-            background: linear-gradient(to bottom, var(--surface-color), var(--bg-color));
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            background-image: linear-gradient(rgba(26, 17, 10, 0.8), rgba(26, 17, 10, 0.9)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         .hero-logo {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             object-fit: cover;
             border-radius: 50%;
-            margin-bottom: 25px;
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
         .hero h2 {
-            font-size: 2.8rem;
+            font-family: var(--font-heading);
+            font-size: 3.2rem;
             margin-bottom: 15px;
-            color: var(--text-primary);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
+            letter-spacing: 2px;
+            max-width: 900px;
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
-        /* === BOTÕES === */
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .btn {
-            padding: 16px 35px;
+            padding: 18px 40px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
             text-transform: uppercase;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
+            transition: 0.3s;
+            letter-spacing: 1.5px;
             display: inline-block;
-        }
-
-        .btn-primary {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 25px var(--accent-glow);
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             background-color: #eec24a;
-            box-shadow: 0 0 25px rgba(238, 194, 74, 0.5);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
-        /* === CARROSSEL INFINITO === */
+        /* === CARROSSEL === */
         .carousel-section {
-            padding: 0 5% 80px;
+            padding: 80px 5%;
             text-align: center;
         }
 
         .section-title {
+            font-family: var(--font-heading);
             color: var(--accent-color);
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 2rem;
-            font-weight: 600;
+            letter-spacing: 3px;
+            font-size: 2.5rem;
         }
 
         .carousel-wrapper {
@@ -177,9 +196,9 @@
         .carousel-container {
             overflow: hidden;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
             background-color: var(--surface-color);
-            padding: 15px;
+            padding: 20px;
         }
 
         .carousel-track {
@@ -192,44 +211,41 @@
             aspect-ratio: 4/3;
             border-radius: 8px;
             overflow: hidden;
-            position: relative;
         }
 
         .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: 0.6s;
         }
 
         .carousel-slide:hover img {
-            transform: scale(1.08);
+            transform: scale(1.1);
         }
 
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: var(--surface-color);
+            background-color: rgba(38, 26, 16, 0.9);
             color: var(--accent-color);
             border: 2px solid var(--accent-color);
             width: 60px;
             height: 60px;
             font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
             z-index: 10;
             border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
         }
 
         .carousel-btn:hover {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            transform: translateY(-50%) scale(1.1);
         }
 
         .carousel-btn.prev { left: 0; }
@@ -237,26 +253,19 @@
 
         /* === MAPA E LOCALIZAÇÃO === */
         .map-section {
-            padding: 60px 5%;
+            padding: 80px 5%;
             background-color: var(--surface-color);
             text-align: center;
             border-top: 2px solid var(--accent-color);
         }
 
-        .map-section p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-
         .map-container {
-            max-width: 1000px;
-            margin: 0 auto 30px;
-            border: 3px solid var(--accent-color);
+            max-width: 1100px;
+            margin: 30px auto;
+            border: 4px solid var(--accent-color);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-            background-color: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         .map-container iframe {
@@ -266,24 +275,56 @@
             display: block;
         }
 
-        /* === RODAPÉ === */
         footer {
             text-align: center;
-            padding: 20px; /* Reduzido para deixar a barra menor */
+            padding: 20px;
             background-color: var(--bg-color);
             color: var(--text-secondary);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* === RESPONSIVO MOBILE === */
+        /* === BOTÃO WHATSAPP PADRÃO GW STORE === */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-green);
+            color: #FFF;
+            border-radius: 50%;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px; /* Tamanho exato para alinhar o ícone */
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Apenas sombra escura elegante */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            animation: pulse-green 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #1ebe5d;
+            color: #FFF;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* === RESPONSIVO === */
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; padding: 15px 5%; }
-            .hero-logo { width: 110px; height: 110px; }
-            .hero h2 { font-size: 2rem; }
+            .hero h2 { font-size: 2.2rem; }
+            .carousel-slide { flex: 0 0 100%; }
             .carousel-wrapper { padding: 0 50px; }
-            .carousel-btn { width: 45px; height: 45px; font-size: 1.4rem; }
-            .carousel-slide { flex: 0 0 100%; } 
+            .carousel-btn { width: 45px; height: 45px; }
+            header { flex-direction: column; gap: 10px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 30px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -296,100 +337,100 @@
         </div>
         <nav class="social-header">
             <a href="https://www.instagram.com/flowereventos_/" target="_blank">Instagram</a>
-            <a href="https://wa.me/5551981119614" target="_blank">WhatsApp</a>
+            <a href="https://www.facebook.com/p/Flower-Eventos-61571761718462/" target="_blank">Facebook</a>
         </nav>
     </header>
 
     <section class="hero">
-        <img src="img/logo.png" alt="Flower Eventos Logo Central" class="hero-logo">
-        
-        <h2>O cenário dos seus sonhos em Guaíba</h2>
-        <p>Realizamos aniversários, casamentos, formaturas, eventos corporativos, entre outros momentos inesquecíveis.</p>
-        
-        <div class="action-buttons">
-            <a href="https://wa.me/5551981119614?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20meu%20evento." target="_blank" class="btn btn-primary">Orçamento Via WhatsApp</a>
+        <img src="img/logo.png" alt="Flower Eventos" class="hero-logo reveal">
+        <h2 class="reveal">O cenário dos seus sonhos em Guaíba</h2>
+        <p class="reveal">Realizamos aniversários, casamentos, formaturas e eventos corporativos com total sofisticação.</p>
+        <div class="reveal">
+            <a href="https://wa.me/5551981119614" class="btn" target="_blank">Orçamento Via WhatsApp</a>
         </div>
     </section>
 
-    <section class="carousel-section">
+    <section class="carousel-section reveal">
         <h2 class="section-title">Conheça nosso espaço</h2>
-        
         <div class="carousel-wrapper">
             <button class="carousel-btn prev" id="prevBtn">❮</button>
-            
             <div class="carousel-container">
                 <div class="carousel-track" id="track">
-                    <div class="carousel-slide"><img src="img/foto1.png" alt="Espaço 1"></div>
-                    <div class="carousel-slide"><img src="img/foto2.png" alt="Espaço 2"></div>
-                    <div class="carousel-slide"><img src="img/foto3.png" alt="Espaço 3"></div>
-                    <div class="carousel-slide"><img src="img/foto4.png" alt="Espaço 4"></div>
-                    <div class="carousel-slide"><img src="img/foto5.png" alt="Espaço 5"></div>
-                    <div class="carousel-slide"><img src="img/foto6.png" alt="Espaço 6"></div>
+                    <div class="carousel-slide"><img src="img/foto1.png" alt="Foto 1"></div>
+                    <div class="carousel-slide"><img src="img/foto2.png" alt="Foto 2"></div>
+                    <div class="carousel-slide"><img src="img/foto3.png" alt="Foto 3"></div>
+                    <div class="carousel-slide"><img src="img/foto4.png" alt="Foto 4"></div>
+                    <div class="carousel-slide"><img src="img/foto5.png" alt="Foto 5"></div>
+                    <div class="carousel-slide"><img src="img/foto6.png" alt="Foto 6"></div>
                 </div>
             </div>
-            
             <button class="carousel-btn next" id="nextBtn">❯</button>
         </div>
     </section>
 
-    <section class="map-section">
+    <section class="map-section reveal">
         <h2 class="section-title">Localização</h2>
         <p>📍 Av. Norberto Linck, 592 - Parque 35, Guaíba - RS</p>
-        
         <div class="map-container">
-            <iframe src="https://maps.google.com/maps?q=Av.+Norberto+Linck,+592+-+Parque+35,+Gua%C3%ADba+-+RS&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3451.688329683838!2d-51.320473!3d-30.103099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951981a8f9f60f6b%3A0x6b7a8a8e8e8e8e8e!2sAv.%20Norberto%20Linck%2C%20592%20-%20Parque%2035%2C%20Gua%C3%ADba%20-%20RS!5e0!3m2!1spt-BR!2sbr!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
         </div>
-
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Av.+Norberto+Linck,+592+-+Parque+35,+Guaíba+-+RS" target="_blank" class="btn btn-primary">Como chegar</a>
+        <a href="https://www.google.com/maps/dir//Av.+Norberto+Linck,+592+-+Parque+35,+Gua%C3%ADba+-+RS" target="_blank" class="btn">Como chegar</a>
     </section>
 
     <footer>
         <p>© 2026 Flower Eventos - Guaíba, RS. Onde a sua celebração se torna inesquecível.</p>
     </footer>
 
+    <a href="https://wa.me/5551981119614" class="whatsapp-float" target="_blank" title="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
+        // Lógica Carrossel Infinito
         const track = document.getElementById('track');
         let isMoving = false;
 
-        document.getElementById('nextBtn').addEventListener('click', () => {
+        function moveNext() {
             if (isMoving) return;
             isMoving = true;
-            
             const slideWidth = track.children[0].getBoundingClientRect().width;
-            const gap = 20; 
-            
-            track.style.transition = 'transform 0.5s ease-in-out';
+            const gap = 20;
+            track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
             track.style.transform = `translateX(-${slideWidth + gap}px)`;
-
             setTimeout(() => {
                 track.style.transition = 'none';
-                track.appendChild(track.children[0]); 
+                track.appendChild(track.children[0]);
                 track.style.transform = 'translateX(0)';
                 isMoving = false;
             }, 500);
-        });
+        }
 
-        document.getElementById('prevBtn').addEventListener('click', () => {
+        function movePrev() {
             if (isMoving) return;
             isMoving = true;
-            
             const slideWidth = track.children[0].getBoundingClientRect().width;
             const gap = 20;
-
             track.style.transition = 'none';
             track.insertBefore(track.children[track.children.length - 1], track.children[0]);
             track.style.transform = `translateX(-${slideWidth + gap}px)`;
-
             setTimeout(() => {
-                track.style.transition = 'transform 0.5s ease-in-out';
+                track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
                 track.style.transform = 'translateX(0)';
             }, 20);
+            setTimeout(() => { isMoving = false; }, 520);
+        }
 
-            setTimeout(() => {
-                isMoving = false;
-            }, 520);
-        });
+        document.getElementById('nextBtn').addEventListener('click', moveNext);
+        document.getElementById('prevBtn').addEventListener('click', movePrev);
+
+        // Revelação no Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
-
 </body>
 </html>
