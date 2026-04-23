@@ -199,7 +199,7 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.7);
             background-color: var(--surface-color);
             padding: 20px;
-            touch-action: pan-y; /* Permite scroll vertical, mas controla o swipe horizontal */
+            touch-action: pan-y; 
         }
 
         .carousel-track {
@@ -220,7 +220,7 @@
             object-fit: cover;
             transition: 0.6s;
             cursor: pointer;
-            -webkit-user-drag: none; /* Impede o efeito "fantasma" ao arrastar a imagem */
+            -webkit-user-drag: none; 
         }
 
         .carousel-slide:hover img {
@@ -254,7 +254,7 @@
         .carousel-btn.prev { left: 0; }
         .carousel-btn.next { right: 0; }
 
-        /* === SISTEMA LIGHTBOX CENTRALIZADO === */
+        /* === SISTEMA LIGHTBOX === */
         .lightbox {
             display: none; 
             position: fixed; 
@@ -397,7 +397,7 @@
         <h2 class="reveal">O cenário dos seus sonhos em Guaíba</h2>
         <p class="reveal">Realizamos aniversários, casamentos, formaturas e eventos corporativos com total sofisticação.</p>
         <div class="reveal">
-            <a href="https://wa.me/5551981119614" class="btn" target="_blank">Orçamento Via WhatsApp</a>
+            <a href="https://wa.me/5551981119614?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20meu%20evento." class="btn" target="_blank">Orçamento Via WhatsApp</a>
         </div>
     </section>
 
@@ -432,7 +432,7 @@
         <p>© 2026 Flower Eventos - Guaíba, RS. Onde a sua celebração se torna inesquecível.</p>
     </footer>
 
-    <a href="https://wa.me/5551981119614" class="whatsapp-float" target="_blank" title="Falar no WhatsApp">
+    <a href="https://wa.me/5551981119614?text=Olá,%20estava%20vendo%20o%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20espaço%20para%20eventos!" class="whatsapp-float" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -454,14 +454,12 @@
             document.getElementById("meuLightbox").style.display = "none";
         }
 
-        // Fechar ao clicar fora da imagem
         document.getElementById('meuLightbox').addEventListener('click', function(e) {
             if (e.target !== document.getElementById('imgAmpliada')) {
                 fecharLightbox();
             }
         });
 
-        // Fechar ao fazer scroll
         window.addEventListener('scroll', () => {
             const lightbox = document.getElementById("meuLightbox");
             if (lightbox.style.display === "flex") {
@@ -522,13 +520,11 @@
         carouselContainer.addEventListener('touchend', () => {
             if (!startX || !endX) return;
             let diff = startX - endX;
-            // Se o arrasto for maior que 50px, muda a imagem
             if (diff > 50) {
                 moveNext();
             } else if (diff < -50) {
                 movePrev();
             }
-            // Reseta as variáveis
             startX = 0;
             endX = 0;
         });
