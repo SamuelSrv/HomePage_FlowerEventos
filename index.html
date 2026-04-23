@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Eventos - Guaíba</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <style>
+        /* === VARIÁVEIS DE CORES BASEADAS NO LOGO === */
+        :root {
+            --bg-color: #1e140d; 
+            --surface-color: #2a1e16; 
+            --text-primary: #f9f4ea; 
+            --text-secondary: #b8a48c; 
+            --accent-color: #d9a657; 
+            --accent-glow: rgba(217, 166, 87, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* === HEADER FIXO === */
+        header {
+            background-color: var(--surface-color);
+            padding: 10px 5%;
+            border-bottom: 2px solid var(--accent-color);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .social-header {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-header a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border: 2px solid var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-header a:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--surface-color), var(--bg-color));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-logo {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* === BOTÕES === */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 16px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: #eec24a;
+            box-shadow: 0 0 25px rgba(238, 194, 74, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* === CARROSSEL INFINITO === */
+        .carousel-section {
+            padding: 0 5% 80px;
+            text-align: center;
+        }
+
+        .section-title {
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            max-width: 1500px; 
+            margin: 0 auto;
+            padding: 0 70px;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background-color: var(--surface-color);
+            padding: 15px;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+        }
+
+        .carousel-slide {
+            flex: 0 0 calc((100% - 40px) / 3); 
+            aspect-ratio: 4/3;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.08);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--surface-color);
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev { left: 0; }
+        .carousel-btn.next { right: 0; }
+
+        /* === MAPA E LOCALIZAÇÃO === */
+        .map-section {
+            padding: 60px 5%;
+            background-color: var(--surface-color);
+            text-align: center;
+            border-top: 2px solid var(--accent-color);
+        }
+
+        .map-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .map-container {
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            border: 3px solid var(--accent-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            background-color: #000;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+        }
+
+        /* === RODAPÉ === */
+        footer {
+            text-align: center;
+            padding: 20px; /* Reduzido para deixar a barra menor */
+            background-color: var(--bg-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* === RESPONSIVO MOBILE === */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 15px 5%; }
+            .hero-logo { width: 110px; height: 110px; }
+            .hero h2 { font-size: 2rem; }
+            .carousel-wrapper { padding: 0 50px; }
+            .carousel-btn { width: 45px; height: 45px; font-size: 1.4rem; }
+            .carousel-slide { flex: 0 0 100%; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <img src="img/logo.png" alt="Flower Eventos Logo" class="logo-img">
+            <h1>Flower Eventos</h1>
+        </div>
+        <nav class="social-header">
+            <a href="https://www.instagram.com/flowereventos_/" target="_blank">Instagram</a>
+            <a href="https://wa.me/5551981119614" target="_blank">WhatsApp</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="img/logo.png" alt="Flower Eventos Logo Central" class="hero-logo">
+        
+        <h2>O cenário dos seus sonhos em Guaíba</h2>
+        <p>Realizamos aniversários, casamentos, formaturas, eventos corporativos, entre outros momentos inesquecíveis.</p>
+        
+        <div class="action-buttons">
+            <a href="https://wa.me/5551981119614?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20meu%20evento." target="_blank" class="btn btn-primary">Orçamento Via WhatsApp</a>
+        </div>
+    </section>
+
+    <section class="carousel-section">
+        <h2 class="section-title">Conheça nosso espaço</h2>
+        
+        <div class="carousel-wrapper">
+            <button class="carousel-btn prev" id="prevBtn">❮</button>
+            
+            <div class="carousel-container">
+                <div class="carousel-track" id="track">
+                    <div class="carousel-slide"><img src="img/foto1.png" alt="Espaço 1"></div>
+                    <div class="carousel-slide"><img src="img/foto2.png" alt="Espaço 2"></div>
+                    <div class="carousel-slide"><img src="img/foto3.png" alt="Espaço 3"></div>
+                    <div class="carousel-slide"><img src="img/foto4.png" alt="Espaço 4"></div>
+                    <div class="carousel-slide"><img src="img/foto5.png" alt="Espaço 5"></div>
+                    <div class="carousel-slide"><img src="img/foto6.png" alt="Espaço 6"></div>
+                </div>
+            </div>
+            
+            <button class="carousel-btn next" id="nextBtn">❯</button>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <h2 class="section-title">Localização</h2>
+        <p>📍 Av. Norberto Linck, 592 - Parque 35, Guaíba - RS</p>
+        
+        <div class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Av.+Norberto+Linck,+592+-+Parque+35,+Gua%C3%ADba+-+RS&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Av.+Norberto+Linck,+592+-+Parque+35,+Guaíba+-+RS" target="_blank" class="btn btn-primary">Como chegar</a>
+    </section>
+
+    <footer>
+        <p>© 2026 Flower Eventos - Guaíba, RS. Onde a sua celebração se torna inesquecível.</p>
+    </footer>
+
+    <script>
+        const track = document.getElementById('track');
+        let isMoving = false;
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (isMoving) return;
+            isMoving = true;
+            
+            const slideWidth = track.children[0].getBoundingClientRect().width;
+            const gap = 20; 
+            
+            track.style.transition = 'transform 0.5s ease-in-out';
+            track.style.transform = `translateX(-${slideWidth + gap}px)`;
+
+            setTimeout(() => {
+                track.style.transition = 'none';
+                track.appendChild(track.children[0]); 
+                track.style.transform = 'translateX(0)';
+                isMoving = false;
+            }, 500);
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (isMoving) return;
+            isMoving = true;
+            
+            const slideWidth = track.children[0].getBoundingClientRect().width;
+            const gap = 20;
+
+            track.style.transition = 'none';
+            track.insertBefore(track.children[track.children.length - 1], track.children[0]);
+            track.style.transform = `translateX(-${slideWidth + gap}px)`;
+
+            setTimeout(() => {
+                track.style.transition = 'transform 0.5s ease-in-out';
+                track.style.transform = 'translateX(0)';
+            }, 20);
+
+            setTimeout(() => {
+                isMoving = false;
+            }, 520);
+        });
+    </script>
+
+</body>
+</html>
