@@ -199,6 +199,7 @@
             box-shadow: 0 15px 40px rgba(0,0,0,0.7);
             background-color: var(--surface-color);
             padding: 20px;
+            touch-action: pan-y; /* Permite scroll vertical, mas controla o swipe horizontal */
         }
 
         .carousel-track {
@@ -219,6 +220,7 @@
             object-fit: cover;
             transition: 0.6s;
             cursor: pointer;
+            -webkit-user-drag: none; /* Impede o efeito "fantasma" ao arrastar a imagem */
         }
 
         .carousel-slide:hover img {
@@ -252,9 +254,9 @@
         .carousel-btn.prev { left: 0; }
         .carousel-btn.next { right: 0; }
 
-        /* === SISTEMA LIGHTBOX CENTRALIZADO (CLIQUE PARA AMPLIAR FOTOS) === */
+        /* === SISTEMA LIGHTBOX CENTRALIZADO === */
         .lightbox {
-            display: none; /* O JS mudará isso para 'flex' */
+            display: none; 
             position: fixed; 
             z-index: 3000; 
             left: 0;
@@ -263,15 +265,14 @@
             height: 100%; 
             background-color: rgba(0,0,0,0.9);
             backdrop-filter: blur(5px);
-            /* Flexbox garante a centralização perfeita */
             align-items: center; 
             justify-content: center; 
         }
 
         .lightbox-content {
-            max-width: 95vw; /* Usa a largura da tela como limite */
-            max-height: 85vh; /* Usa a altura da tela como limite */
-            object-fit: contain; /* Garante que a foto não estique nem corte */
+            max-width: 95vw; 
+            max-height: 85vh; 
+            object-fit: contain; 
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(217, 166, 87, 0.3);
             animation: zoom 0.3s ease-in-out;
@@ -291,7 +292,7 @@
             font-weight: bold;
             transition: 0.3s;
             cursor: pointer;
-            z-index: 3001; /* Fica sempre acima da imagem */
+            z-index: 3001; 
         }
 
         .close-lightbox:hover,
@@ -404,7 +405,7 @@
         <h2 class="section-title">Conheça nosso espaço</h2>
         <div class="carousel-wrapper">
             <button class="carousel-btn prev" id="prevBtn">❮</button>
-            <div class="carousel-container">
+            <div class="carousel-container" id="carouselContainer">
                 <div class="carousel-track" id="track">
                     <div class="carousel-slide"><img src="img/foto1.png" alt="Foto 1" onclick="abrirLightbox(this.src)"></div>
                     <div class="carousel-slide"><img src="img/foto2.png" alt="Foto 2" onclick="abrirLightbox(this.src)"></div>
@@ -441,11 +442,11 @@
     </div>
 
     <script>
-        // === LÓGICA LIGHTBOX (Ampliar Foto) ===
+        // === LÓGICA LIGHTBOX ===
         function abrirLightbox(srcImagem) {
             const lightbox = document.getElementById("meuLightbox");
             const imgAmpliada = document.getElementById("imgAmpliada");
-            lightbox.style.display = "flex"; // Ajustado para flexbox
+            lightbox.style.display = "flex"; 
             imgAmpliada.src = srcImagem;
         }
 
@@ -459,6 +460,14 @@
                 fecharLightbox();
             }
         });
+
+        // Fechar ao fazer scroll
+        window.addEventListener('scroll', () => {
+            const lightbox = document.getElementById("meuLightbox");
+            if (lightbox.style.display === "flex") {
+                fecharLightbox();
+            }
+        }, { passive: true });
 
         // === LÓGICA CARROSSEL INFINITO ===
         const track = document.getElementById('track');
@@ -496,6 +505,33 @@
 
         document.getElementById('nextBtn').addEventListener('click', moveNext);
         document.getElementById('prevBtn').addEventListener('click', movePrev);
+
+        // === LÓGICA DE SWIPE (ARRASTAR NO CELULAR) ===
+        const carouselContainer = document.getElementById('carouselContainer');
+        let startX = 0;
+        let endX = 0;
+
+        carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchend', () => {
+            if (!startX || !endX) return;
+            let diff = startX - endX;
+            // Se o arrasto for maior que 50px, muda a imagem
+            if (diff > 50) {
+                moveNext();
+            } else if (diff < -50) {
+                movePrev();
+            }
+            // Reseta as variáveis
+            startX = 0;
+            endX = 0;
+        });
 
         // === REVELAÇÃO NO SCROLL ===
         const observer = new IntersectionObserver((entries) => {
